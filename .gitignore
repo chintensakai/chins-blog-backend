@@ -1,0 +1,6 @@
+# Project exclude paths
+/chins-blog-backend-commons/target/
+/chins-blog-backend-core/target/
+/chins-blog-backend-provider/target/
+.idea
+*.iml
