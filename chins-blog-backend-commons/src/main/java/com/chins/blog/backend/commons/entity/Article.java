@@ -9,6 +9,7 @@ public class Article {
   private String title;
   private String content;
   private String date;
+  private int categoryId;
   private int views;
   private int comments;
   private int thumbs;
