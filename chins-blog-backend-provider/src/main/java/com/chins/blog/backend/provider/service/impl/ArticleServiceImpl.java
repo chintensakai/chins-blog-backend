@@ -9,6 +9,8 @@ import com.chins.blog.backend.provider.mapper.ACRelationMapper;
 import com.chins.blog.backend.provider.mapper.ArticleMapper;
 import com.chins.blog.backend.provider.mapper.CategoryMapper;
 import com.chins.blog.backend.provider.service.ArticleService;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,27 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     return 0;
+  }
+
+  @Override
+  public Map<String, Object> getArticleAndCategoryById(Long id) {
+    System.out.println("id " + id);
+    Article article = articleMapper.selectById(id);
+    System.out.println("article " + article);
+    List<Long> categoryIdByArticleId = acRelationMapper.getCategoryIdByArticleId(id);
+
+    List<String> categoryNames = new ArrayList<>();
+
+    for (Long categoryId :
+        categoryIdByArticleId) {
+      categoryNames.add(categoryMapper.getCategoryNameById(categoryId));
+    }
+
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("article", article);
+    resultMap.put("categoryList", categoryNames);
+
+    return resultMap;
   }
 
 }

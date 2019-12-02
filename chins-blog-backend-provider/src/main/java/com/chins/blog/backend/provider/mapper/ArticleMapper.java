@@ -5,4 +5,5 @@ import com.chins.blog.backend.commons.entity.Article;
 
 public interface ArticleMapper extends BaseMapper<Article> {
 
+
 }
