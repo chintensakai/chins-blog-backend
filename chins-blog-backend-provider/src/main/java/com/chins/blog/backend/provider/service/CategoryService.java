@@ -5,4 +5,5 @@ import com.chins.blog.backend.commons.entity.Category;
 
 public interface CategoryService extends IService<Category> {
 
+  Long getCategoryIdByCName(String categoryName);
 }

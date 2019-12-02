@@ -16,5 +16,4 @@ spring:
 
 mybatis-plus:
   type-aliases-package: com.chins.blog.backend.commons.entity
-  #  config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml

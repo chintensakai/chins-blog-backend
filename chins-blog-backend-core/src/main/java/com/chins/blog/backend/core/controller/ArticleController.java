@@ -1,5 +1,6 @@
 package com.chins.blog.backend.core.controller;
 
+import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.base.ResponseBase;
 import com.chins.blog.backend.commons.entity.Article;
 import com.chins.blog.backend.provider.service.ArticleService;
@@ -30,8 +31,9 @@ public class ArticleController {
   }
 
   @PostMapping("/postarticle")
-  public <T> ResponseBase postArticle(@RequestBody String body) {
+  public <T> ResponseBase postArticle(@RequestBody RequestBase request) {
 
+    int i = articleService.insertArticleAndCategory(request);
     return null;
   }
 }
