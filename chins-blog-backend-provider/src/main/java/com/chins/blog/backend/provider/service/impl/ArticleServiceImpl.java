@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.entity.ACRelation;
 import com.chins.blog.backend.commons.entity.Article;
+import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.commons.utils.JSONUtils;
 import com.chins.blog.backend.provider.mapper.ACRelationMapper;
 import com.chins.blog.backend.provider.mapper.ArticleMapper;
@@ -88,6 +89,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     resultMap.put("categoryList", categoryNames);
 
     return resultMap;
+  }
+
+  @Override
+  public List<YearlyArticleCount> getYearlyArticleCount(int year) {
+
+    String Yearstart = year + "-1-1";
+    String YearEnd = year + "-12-31";
+
+    List<YearlyArticleCount> yearlyArticleCounts = articleMapper
+        .selectYearlyArticles(Yearstart, YearEnd);
+
+    return yearlyArticleCounts;
   }
 
 }
