@@ -3,6 +3,7 @@ package com.chins.blog.backend.core.controller;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.base.ResponseBase;
 import com.chins.blog.backend.commons.entity.Article;
+import com.chins.blog.backend.commons.entity.ArticleCountBean;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.provider.service.ArticleService;
 import java.util.HashMap;
@@ -49,8 +50,16 @@ public class ArticleController {
   @GetMapping("/archive/{year}")
   public <T> ResponseBase getYearlyArticle(@PathVariable int year) {
 
-    List<YearlyArticleCount> yearlyArticleCount = articleService.getYearlyArticleCount(year);
+    List<ArticleCountBean> yearlyArticleCount = articleService.getYearlyArticleCount(year);
 
     return new ResponseBase(200, "success", yearlyArticleCount);
+  }
+
+  @GetMapping("/archive")
+  public <T> ResponseBase getArchiveArticle() {
+
+    List<YearlyArticleCount> archiveYearly = articleService.getArchiveYearly();
+
+    return new ResponseBase(200, "success", archiveYearly);
   }
 }

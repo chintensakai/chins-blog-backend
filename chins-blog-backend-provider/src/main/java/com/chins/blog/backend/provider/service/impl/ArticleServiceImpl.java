@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.entity.ACRelation;
 import com.chins.blog.backend.commons.entity.Article;
+import com.chins.blog.backend.commons.entity.ArticleCountBean;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.commons.utils.JSONUtils;
 import com.chins.blog.backend.provider.mapper.ACRelationMapper;
 import com.chins.blog.backend.provider.mapper.ArticleMapper;
 import com.chins.blog.backend.provider.mapper.CategoryMapper;
 import com.chins.blog.backend.provider.service.ArticleService;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,15 +95,36 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
   }
 
   @Override
-  public List<YearlyArticleCount> getYearlyArticleCount(int year) {
+  public List<ArticleCountBean> getYearlyArticleCount(int year) {
 
-    String Yearstart = year + "-1-1";
+    String YearStart = year + "-1-1";
     String YearEnd = year + "-12-31";
 
-    List<YearlyArticleCount> yearlyArticleCounts = articleMapper
-        .selectYearlyArticles(Yearstart, YearEnd);
+    List<ArticleCountBean> yearlyArticleCounts = articleMapper
+        .selectYearlyArticles(YearStart, YearEnd);
 
     return yearlyArticleCounts;
+  }
+
+  @Override
+  public List<YearlyArticleCount> getArchiveYearly() {
+
+    List<YearlyArticleCount> resultList = new ArrayList<>();
+
+    LocalDate localDate = LocalDate.now();
+    int currentYear = localDate.getYear();
+    List<Integer> years = Arrays
+        .asList(currentYear, currentYear - 1, currentYear - 2, currentYear - 3);
+
+    for (Integer year :
+        years) {
+      YearlyArticleCount yearlyArticleCount = new YearlyArticleCount();
+      yearlyArticleCount.setYear(year);
+      yearlyArticleCount.setCount(articleMapper.selectYearlyArchive(year));
+      resultList.add(yearlyArticleCount);
+    }
+
+    return resultList;
   }
 
 }
