@@ -3,5 +3,6 @@
 /chins-blog-backend-core/target/
 /chins-blog-backend-provider/target/
 /chins-blog-backend-cache/target/
+/chins-blog-backend-security/target/
 .idea
 *.iml

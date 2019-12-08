@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.chins.blog.backend.provider.mapper")
+@MapperScan({"com.chins.blog.backend.provider.mapper", "com.chins.blog.backend.security.mapper"})
 public class BlogBackendApplication {
 
   public static void main(String[] args) {

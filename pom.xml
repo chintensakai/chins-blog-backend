@@ -12,6 +12,7 @@
     <module>chins-blog-backend-provider</module>
     <module>chins-blog-backend-commons</module>
     <module>chins-blog-backend-cache</module>
+    <module>chins-blog-backend-security</module>
   </modules>
   <packaging>pom</packaging>
 

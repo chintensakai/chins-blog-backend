@@ -30,6 +30,8 @@ public class ResponseBase<T> {
 
   public static <T> ResponseBase failed(T data) {
 
+    System.out.println("--------------- " + data);
+
     ResponseBase responseBase = new ResponseBase();
     responseBase.setCode(BaseStatusEnum.INTERNAL_SERVER_ERROR.getIndex());
     responseBase.setMessage(BaseStatusEnum.INTERNAL_SERVER_ERROR.getMsg());
