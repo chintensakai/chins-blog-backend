@@ -60,7 +60,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         categorys) {
 
       Long categoryId = categoryMapper.queryCategoryIdByName(category);
-      System.out.println("---------- categoryId " + categoryId);
 
       ACRelation acRelation = new ACRelation();
       acRelation.setArticleId(article.getId());
@@ -75,9 +74,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
   @Override
   public Map<String, Object> getArticleAndCategoryById(Long id) {
-    System.out.println("id " + id);
     Article article = articleMapper.selectById(id);
-    System.out.println("article " + article);
     List<Long> categoryIdByArticleId = acRelationMapper.getCategoryIdByArticleId(id);
 
     List<String> categoryNames = new ArrayList<>();
@@ -125,6 +122,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     return resultList;
+  }
+
+  @Override
+  public void increArticleViews(RequestBase requestBase) {
+
+    Map<String, Object> data = requestBase.getData();
+    Long id = Long.valueOf(String.valueOf(data.get("id")));
+    articleMapper.increArticleViewwById(id);
   }
 
 }

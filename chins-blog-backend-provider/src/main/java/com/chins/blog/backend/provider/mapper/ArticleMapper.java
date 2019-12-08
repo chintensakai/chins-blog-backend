@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface ArticleMapper extends BaseMapper<Article> {
 
@@ -21,4 +22,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
   @Select("SELECT count(*) FROM chinsblog.article where date between CONCAT(#{year}, '-1-1') AND CONCAT(#{year}, '-12-31')")
   @ResultType(YearlyArticleCount.class)
   int selectYearlyArchive(@Param("year") int years);
+
+  @Update("UPDATE chinsblog.article SET views = views + 1 WHERE id = #{id}")
+  int increArticleViewwById(@Param("id") Long id);
 }

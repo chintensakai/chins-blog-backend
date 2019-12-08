@@ -20,4 +20,6 @@ public interface ArticleService extends IService<Article> {
 
   List<YearlyArticleCount> getArchiveYearly();
 
+  void increArticleViews(RequestBase requestBase);
+
 }
