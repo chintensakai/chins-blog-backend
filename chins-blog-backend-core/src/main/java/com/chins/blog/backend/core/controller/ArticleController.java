@@ -66,8 +66,6 @@ public class ArticleController {
   @PostMapping("/article/increviews")
   public <T> ResponseBase articleViewsIncre(@RequestBody RequestBase requestBase) {
 
-    System.out.println("============== " + requestBase);
-
     articleService.increArticleViews(requestBase);
 
     return new ResponseBase(200, "success", null);

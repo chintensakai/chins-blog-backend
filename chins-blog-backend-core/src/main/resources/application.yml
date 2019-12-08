@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: provider
+    active: provider, cache
 
 server:
   port: 8082

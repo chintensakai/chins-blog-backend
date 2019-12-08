@@ -14,4 +14,27 @@ public class ResponseBase<T> {
     this.message = message;
     this.data = data;
   }
+
+  public ResponseBase() {
+  }
+
+  public static <T> ResponseBase success(T data) {
+
+    ResponseBase responseBase = new ResponseBase();
+    responseBase.setCode(BaseStatusEnum.SUCCESS.getIndex());
+    responseBase.setMessage(BaseStatusEnum.SUCCESS.getMsg());
+    responseBase.setData(data);
+
+    return responseBase;
+  }
+
+  public static <T> ResponseBase failed(T data) {
+
+    ResponseBase responseBase = new ResponseBase();
+    responseBase.setCode(BaseStatusEnum.INTERNAL_SERVER_ERROR.getIndex());
+    responseBase.setMessage(BaseStatusEnum.INTERNAL_SERVER_ERROR.getMsg());
+    responseBase.setData(data);
+
+    return responseBase;
+  }
 }

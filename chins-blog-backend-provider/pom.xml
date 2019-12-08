@@ -17,6 +17,13 @@
       <artifactId>chins-blog-backend-commons</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+
+    <!-- mysql驱动依赖  不加版本号会获取最新的 -->
+    <dependency>
+      <artifactId>mysql-connector-java</artifactId>
+      <groupId>mysql</groupId>
+    </dependency>
+
   </dependencies>
 
 </project>
