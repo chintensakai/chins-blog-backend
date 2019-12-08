@@ -4,11 +4,13 @@ import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.base.ResponseBase;
 import com.chins.blog.backend.commons.entity.Article;
 import com.chins.blog.backend.commons.entity.ArticleCountBean;
+import com.chins.blog.backend.commons.entity.TopViewsArticle;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.provider.service.ArticleService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,21 +32,21 @@ public class ArticleController {
     List<Article> allArticle = articleService.getAllArticle();
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("list", allArticle);
-    return new ResponseBase(200, "success", resultMap);
+    return ResponseBase.success(resultMap);
   }
 
   @PostMapping("/postarticle")
   public <T> ResponseBase postArticle(@RequestBody RequestBase request) {
 
     int i = articleService.insertArticleAndCategory(request);
-    return null;
+    return ResponseBase.success(i);
   }
 
   @GetMapping("/article/{id}")
   public <T> ResponseBase getArticleDetailById(@PathVariable Long id) {
 
     Map<String, Object> articleAndCategoryById = articleService.getArticleAndCategoryById(id);
-    return new ResponseBase(200, "success", articleAndCategoryById);
+    return ResponseBase.success(articleAndCategoryById);
   }
 
   @GetMapping("/archive/{year}")
@@ -52,7 +54,7 @@ public class ArticleController {
 
     List<ArticleCountBean> yearlyArticleCount = articleService.getYearlyArticleCount(year);
 
-    return new ResponseBase(200, "success", yearlyArticleCount);
+    return ResponseBase.success(yearlyArticleCount);
   }
 
   @GetMapping("/archive")
@@ -60,14 +62,22 @@ public class ArticleController {
 
     List<YearlyArticleCount> archiveYearly = articleService.getArchiveYearly();
 
-    return new ResponseBase(200, "success", archiveYearly);
+    return ResponseBase.success(archiveYearly);
   }
 
   @PostMapping("/article/increviews")
   public <T> ResponseBase articleViewsIncre(@RequestBody RequestBase requestBase) {
 
-    articleService.increArticleViews(requestBase);
+    articleService.incrArticleViews(requestBase);
 
-    return new ResponseBase(200, "success", null);
+    return ResponseBase.success(null);
+  }
+
+  @GetMapping("/topviews")
+  public <T> ResponseBase getTopViewsArticle() {
+
+    Set<TopViewsArticle> topViewsArticles = articleService.rangeArticleByViews();
+
+    return ResponseBase.success(topViewsArticles);
   }
 }

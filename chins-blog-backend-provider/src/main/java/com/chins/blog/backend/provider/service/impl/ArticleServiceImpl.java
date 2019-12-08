@@ -1,10 +1,12 @@
 package com.chins.blog.backend.provider.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.chins.blog.backend.cache.utils.RedisUtils;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.entity.ACRelation;
 import com.chins.blog.backend.commons.entity.Article;
 import com.chins.blog.backend.commons.entity.ArticleCountBean;
+import com.chins.blog.backend.commons.entity.TopViewsArticle;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.commons.utils.JSONUtils;
 import com.chins.blog.backend.provider.mapper.ACRelationMapper;
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +36,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
   @Autowired
   private ACRelationMapper acRelationMapper;
 
+  private static final String ARTICLE_VIEWS_RANGE_KEY = "article:views:range";
+
   @Override
   public List<Article> getAllArticle() {
     return articleMapper.selectList(null);
   }
+
+  @Autowired
+  private RedisUtils redisUtils;
 
   @Override
   public int insertArticleAndCategory(RequestBase requestBase) {
@@ -125,11 +133,42 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
   }
 
   @Override
-  public void increArticleViews(RequestBase requestBase) {
+  public void incrArticleViews(RequestBase requestBase) {
 
     Map<String, Object> data = requestBase.getData();
     Long id = Long.valueOf(String.valueOf(data.get("id")));
+
+    Set<TopViewsArticle> set = redisUtils.sortSetRange(ARTICLE_VIEWS_RANGE_KEY, 0, 10);
+    for (TopViewsArticle viewsArticle :
+        set) {
+      if (viewsArticle.getId() == id) {
+        redisUtils.sortSetZincr(ARTICLE_VIEWS_RANGE_KEY, viewsArticle, 1);
+      }
+    }
+
     articleMapper.increArticleViewwById(id);
+  }
+
+  @Override
+  public Set<TopViewsArticle> rangeArticleByViews() {
+
+    List<Article> articles = null;
+    if (!redisUtils.existsKey(ARTICLE_VIEWS_RANGE_KEY)) {
+      articles = articleMapper.selectList(null);
+
+      for (Article article :
+          articles) {
+
+        TopViewsArticle topViewsArticle = new TopViewsArticle();
+        topViewsArticle.setTitle(article.getTitle());
+        topViewsArticle.setId(article.getId());
+        redisUtils.sortSetAdd(ARTICLE_VIEWS_RANGE_KEY, article.getViews(), topViewsArticle);
+      }
+    }
+
+    Set<TopViewsArticle> viewsSet = redisUtils.sortSetRange(ARTICLE_VIEWS_RANGE_KEY, 0, 10);
+
+    return viewsSet;
   }
 
 }

@@ -3,10 +3,14 @@ package com.chins.blog.backend.cache.utils;
 import com.chins.blog.backend.commons.exception.BlogException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -224,4 +228,41 @@ public class RedisUtils {
       throw new BlogException("getListSize failed! ", ex);
     }
   }
+
+  /***
+   * 将元素添加进有序集合
+   * @param key
+   * @param score
+   * @param value
+   * @return
+   */
+  public boolean sortSetAdd(String key, int score, Object value) {
+
+    return redisTemplate.opsForZSet().add(key, value, score);
+  }
+
+  /***
+   * 增加分数
+   * @param key
+   * @param value
+   * @param score
+   * @return 增加分数之后的元素分数
+   */
+  public Double sortSetZincr(String key, Object value, int score) {
+
+    return redisTemplate.opsForZSet().incrementScore(key, value, score);
+  }
+
+  public Set sortSetRange(String key, int start, int end) {
+
+    return redisTemplate.opsForZSet().reverseRange(key, start, end);
+  }
+
+  public Cursor<TypedTuple<Object>> sortSetScan(String key) {
+
+    Cursor<TypedTuple<Object>> scan = redisTemplate.opsForZSet().scan(key, ScanOptions.NONE);
+
+    return scan;
+  }
+
 }

@@ -2,5 +2,6 @@
 /chins-blog-backend-commons/target/
 /chins-blog-backend-core/target/
 /chins-blog-backend-provider/target/
+/chins-blog-backend-cache/target/
 .idea
 *.iml

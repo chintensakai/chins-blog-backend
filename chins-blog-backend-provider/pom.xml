@@ -18,6 +18,12 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
+    <dependency>
+      <artifactId>chins-blog-backend-cache</artifactId>
+      <groupId>com.chins</groupId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
     <!-- mysql驱动依赖  不加版本号会获取最新的 -->
     <dependency>
       <artifactId>mysql-connector-java</artifactId>

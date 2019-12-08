@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.entity.Article;
 import com.chins.blog.backend.commons.entity.ArticleCountBean;
+import com.chins.blog.backend.commons.entity.TopViewsArticle;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface ArticleService extends IService<Article> {
 
@@ -20,6 +22,7 @@ public interface ArticleService extends IService<Article> {
 
   List<YearlyArticleCount> getArchiveYearly();
 
-  void increArticleViews(RequestBase requestBase);
+  void incrArticleViews(RequestBase requestBase);
 
+  Set<TopViewsArticle> rangeArticleByViews();
 }
