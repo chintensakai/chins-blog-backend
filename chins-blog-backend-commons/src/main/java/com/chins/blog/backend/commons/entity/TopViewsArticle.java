@@ -7,4 +7,5 @@ public class TopViewsArticle {
 
   private Long id;
   private String title;
+  private int views;
 }

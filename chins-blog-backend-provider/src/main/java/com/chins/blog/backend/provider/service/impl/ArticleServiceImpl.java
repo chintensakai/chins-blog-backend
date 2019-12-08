@@ -168,6 +168,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     Set<TopViewsArticle> viewsSet = redisUtils.sortSetRange(ARTICLE_VIEWS_RANGE_KEY, 0, 10);
 
+    for (TopViewsArticle topViewsArticle :
+        viewsSet) {
+
+      Double aDouble = redisUtils.sortSetScore(ARTICLE_VIEWS_RANGE_KEY, topViewsArticle);
+      topViewsArticle.setViews(aDouble.intValue());
+    }
+
     return viewsSet;
   }
 

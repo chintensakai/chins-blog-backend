@@ -7,10 +7,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
-import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -258,11 +255,17 @@ public class RedisUtils {
     return redisTemplate.opsForZSet().reverseRange(key, start, end);
   }
 
-  public Cursor<TypedTuple<Object>> sortSetScan(String key) {
+  /***
+   * 获取对应value的分数
+   * @param key
+   * @param value
+   * @return
+   */
+  public Double sortSetScore(String key, Object value) {
 
-    Cursor<TypedTuple<Object>> scan = redisTemplate.opsForZSet().scan(key, ScanOptions.NONE);
+    Double score = redisTemplate.opsForZSet().score(key, value);
 
-    return scan;
+    return score;
   }
 
 }
