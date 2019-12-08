@@ -8,14 +8,14 @@ public class SecurityUserDetails implements UserDetails {
 
   private String password;
   private String username;
-  private Integer status;
+  private Integer state;
   private Collection<? extends GrantedAuthority> authorities;
 
   public SecurityUserDetails(String password, String username, Integer status,
       Collection<? extends GrantedAuthority> authorities) {
     this.password = password;
     this.username = username;
-    this.status = status;
+    this.state = status;
     this.authorities = authorities;
   }
 
@@ -51,6 +51,6 @@ public class SecurityUserDetails implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return status == 1;
+    return state == 1;
   }
 }

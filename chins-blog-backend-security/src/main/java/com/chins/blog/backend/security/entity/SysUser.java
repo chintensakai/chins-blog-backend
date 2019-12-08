@@ -16,11 +16,11 @@ public class SysUser {
   private String sysUserAccount;
   private String sysUserPassword;
   private String sysUserName;
-  private String sysUserphone;
+  private String sysUserPhone;
   private String sysUserEmail;
   private int sysUserState;
-  private String sysUserAddTime;
-  private String sysUserUpTime;
+  private String sysAddTime;
+  private String sysUpTime;
   private List<SysRole> roles;
 
 }
