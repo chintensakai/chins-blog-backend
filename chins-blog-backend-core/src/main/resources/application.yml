@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: provider, cache
+    active: provider, cache, elasticsearch
 
 server:
   port: 8082

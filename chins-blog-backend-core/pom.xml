@@ -23,6 +23,12 @@
       <groupId>com.chins</groupId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+
+    <dependency>
+      <artifactId>chins-blog-backend-elasticsearch</artifactId>
+      <groupId>com.chins</groupId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
 </project>

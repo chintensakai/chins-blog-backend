@@ -3,7 +3,9 @@ package com.chins.blog.backend.commons.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
 
+@Document(indexName = "chinsblog", type = "article")
 @Data
 public class Article {
 
