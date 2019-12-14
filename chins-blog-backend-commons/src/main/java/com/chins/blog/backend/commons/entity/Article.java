@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "chinsblog", type = "article")
+@Document(indexName = "chinsblog_article", type = "article")
 @Data
 public class Article {
 
