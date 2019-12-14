@@ -9,6 +9,7 @@ import com.chins.blog.backend.commons.entity.ArticleCountBean;
 import com.chins.blog.backend.commons.entity.TopViewsArticle;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.commons.utils.JSONUtils;
+import com.chins.blog.backend.elasticsearch.repository.ArticleESRepository;
 import com.chins.blog.backend.provider.mapper.ACRelationMapper;
 import com.chins.blog.backend.provider.mapper.ArticleMapper;
 import com.chins.blog.backend.provider.mapper.CategoryMapper;
@@ -35,6 +36,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
   @Autowired
   private ACRelationMapper acRelationMapper;
+
+  @Autowired
+  private ArticleESRepository articleESRepository;
 
   private static final String ARTICLE_VIEWS_RANGE_KEY = "article:views:range";
 
@@ -178,4 +182,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     return viewsSet;
   }
 
+  @Override
+  public List<String> searchArticleTitle(String title) {
+
+//    CompletionSuggestionBuilder completionSuggestionBuilder = SuggestBuilders
+//        .completionSuggestion("title").prefix(title).size(5);
+//
+//    SuggestBuilder suggestBuilder = new SuggestBuilder();
+//    suggestBuilder.addSuggestion("suggest", completionSuggestionBuilder);
+
+    List<Article> byTitleLike = articleESRepository.findByTitleLike(title);
+    List<String> titleList = new ArrayList<>();
+    for (Article article : byTitleLike) {
+      titleList.add(article.getTitle());
+    }
+    return titleList;
+  }
 }

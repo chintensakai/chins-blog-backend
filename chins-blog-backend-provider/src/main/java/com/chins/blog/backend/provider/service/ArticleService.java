@@ -25,4 +25,6 @@ public interface ArticleService extends IService<Article> {
   void incrArticleViews(RequestBase requestBase);
 
   Set<TopViewsArticle> rangeArticleByViews();
+
+  List<String> searchArticleTitle(String title);
 }

@@ -7,6 +7,7 @@ import com.chins.blog.backend.commons.entity.ArticleCountBean;
 import com.chins.blog.backend.commons.entity.TopViewsArticle;
 import com.chins.blog.backend.commons.entity.YearlyArticleCount;
 import com.chins.blog.backend.provider.service.ArticleService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -80,5 +82,20 @@ public class ArticleController {
     Set<TopViewsArticle> topViewsArticles = articleService.rangeArticleByViews();
 
     return ResponseBase.success(topViewsArticles);
+  }
+
+  @GetMapping("/search")
+  public <T> ResponseBase searchArticleTitle(@RequestParam String title) {
+
+    List<Map<String, Object>> resultList = new ArrayList<>();
+
+    List<String> articles = articleService.searchArticleTitle(title);
+
+    for (String s : articles) {
+      Map<String, Object> map = new HashMap<>();
+      map.put("value", s);
+      resultList.add(map);
+    }
+    return ResponseBase.success(resultList);
   }
 }

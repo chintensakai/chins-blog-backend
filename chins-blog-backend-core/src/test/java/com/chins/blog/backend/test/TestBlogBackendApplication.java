@@ -40,7 +40,14 @@ public class TestBlogBackendApplication {
     for (Book book : list) {
       System.out.println(book);
     }
+  }
 
+  @Test
+  public void useFind2() {
+    List<Article> list = articleESRepository.findByTitleLike("canal");
+    for (Article article : list) {
+      System.out.println(article);
+    }
   }
 
   @Test
