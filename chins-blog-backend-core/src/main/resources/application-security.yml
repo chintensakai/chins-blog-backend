@@ -1,0 +1,4 @@
+jwt:
+  header: Authorization
+  secret: WW91JTIwaGF2ZSUyMHRvJTIwd29yayUyMHZlcnklMjBoYXJkJTIwdG8lMjBsb29rJTIwZWZmb3J0bGVzcw==
+  expiration: 3600000

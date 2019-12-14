@@ -12,21 +12,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
+@RequestMapping("/article")
 public class ArticleController {
 
   @Autowired
   private ArticleService articleService;
 
-  @GetMapping("/articles")
+  @GetMapping("/all")
   public <T> ResponseBase getAllList() {
 
     List<Article> allArticle = articleService.getAllArticle();
@@ -42,7 +43,7 @@ public class ArticleController {
     return ResponseBase.success(i);
   }
 
-  @GetMapping("/article/{id}")
+  @GetMapping("/{id}")
   public <T> ResponseBase getArticleDetailById(@PathVariable Long id) {
 
     Map<String, Object> articleAndCategoryById = articleService.getArticleAndCategoryById(id);
@@ -65,7 +66,7 @@ public class ArticleController {
     return ResponseBase.success(archiveYearly);
   }
 
-  @PostMapping("/article/increviews")
+  @PostMapping("/increviews")
   public <T> ResponseBase articleViewsIncre(@RequestBody RequestBase requestBase) {
 
     articleService.incrArticleViews(requestBase);

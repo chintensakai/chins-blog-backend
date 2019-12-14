@@ -1,4 +1,4 @@
-package com.chins.blog.backend.security.service;
+package com.chins.blog.backend.security.service.impl;
 
 import com.chins.blog.backend.commons.exception.BlogException;
 import com.chins.blog.backend.security.entity.SecurityUserDetails;

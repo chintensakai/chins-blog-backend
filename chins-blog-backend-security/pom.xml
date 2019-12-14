@@ -2,7 +2,6 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>chins-blog-backend-security</artifactId>
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
     <dependency>
@@ -17,8 +16,20 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
-  </dependencies>
+    <dependency>
+      <artifactId>chins-blog-backend-cache</artifactId>
+      <groupId>com.chins</groupId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
 
+    <dependency>
+      <artifactId>jjwt</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <version>0.9.1</version>
+    </dependency>
+
+  </dependencies>
+  <artifactId>chins-blog-backend-security</artifactId>
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -26,5 +37,6 @@
     <groupId>com.chins</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+
 
 </project>
