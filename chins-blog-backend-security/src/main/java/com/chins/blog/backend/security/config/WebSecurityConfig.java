@@ -63,10 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests().antMatchers("/article/**", "/login").permitAll()
         .anyRequest().authenticated();
 
-//    http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
-//        // 如果直接访问登录页面，则登录成功后重定向到这个页面，否则跳转到之前想要访问的页面
-//        .defaultSuccessUrl("/index.html");
-
     http.addFilterBefore(jwtAuthticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
   }

@@ -36,24 +36,21 @@ public class JwtAuthticationTokenFilter extends OncePerRequestFilter {
       HttpServletResponse httpServletResponse, FilterChain filterChain)
       throws ServletException, IOException {
 
-    String header = httpServletRequest.getHeader(jwtUtils.getHeader());
-    System.out.println("-------------- jwtUtils.getHeader() " + jwtUtils.getHeader());
-    System.out.println("-------------- header " + header);
-    if (StringUtils.isNotEmpty(header)) {
-      String usernameFromToken = jwtUtils.getUsernameFromToken(header);
-      System.out.println("------------- " + usernameFromToken);
+    String authHeader = httpServletRequest.getHeader(jwtUtils.getHeader());
+    if (authHeader != null && StringUtils.isNotEmpty(authHeader)) {
+      String usernameFromToken = jwtUtils.getUsernameFromToken(authHeader);
       if (usernameFromToken != null
           && SecurityContextHolder.getContext().getAuthentication() == null) {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(usernameFromToken);
 
-        if (jwtUtils.validateToken(header, userDetails)) {
+        if (jwtUtils.validateToken(authHeader, userDetails)) {
 
+          //加载用户、角色、权限信息，Spring Security根据这些信息判断接口的访问权限
           UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
               userDetails, null, userDetails.getAuthorities());
           authenticationToken
               .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-          System.out.println("================ authenticationToken " + authenticationToken);
           SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
       }

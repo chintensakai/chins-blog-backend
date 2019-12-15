@@ -80,7 +80,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
       acRelation.setCategoryId(categoryId);
 
       int insert = acRelationMapper.insert(acRelation);
-      System.out.println(insert);
     }
 
     return 0;
