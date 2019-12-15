@@ -33,9 +33,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-    System.out.println("---------------- " + authentication);
+    System.out.println("----------------++++++ authentication " + authentication);
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     return jwtUtils.generateTokenFromUsername(username);
+  }
+
+  @Override
+  public SysUser selectUserById(Long id) {
+    SysUser sysUser = sysUserMapper.selectUserById(id);
+    sysUser.setSysUserPassword(null);
+
+    return sysUser;
   }
 }

@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements
@@ -51,6 +52,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
   private RedisUtils redisUtils;
 
   @Override
+  @Transactional
   public int insertArticleAndCategory(RequestBase requestBase) {
 
     Map<String, Object> requestData = requestBase.getData();

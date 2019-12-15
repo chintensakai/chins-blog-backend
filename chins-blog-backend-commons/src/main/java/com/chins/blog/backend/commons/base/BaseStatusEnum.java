@@ -2,7 +2,7 @@ package com.chins.blog.backend.commons.base;
 
 public enum BaseStatusEnum {
 
-  SUCCESS("success！", 200),
+  SUCCESS("success!", 200),
 
   INTERNAL_SERVER_ERROR("Internal Server Error!", 500),
 

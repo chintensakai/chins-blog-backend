@@ -28,13 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsService userDetailsService;
 
-  @Autowired
-  private JwtAuthticationTokenFilter jwtAuthticationTokenFilter;
-
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
 
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public JwtAuthticationTokenFilter jwtAuthticationTokenFilter() {
+    return new JwtAuthticationTokenFilter();
   }
 
   @Override
@@ -58,13 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 暂时禁用csrc否则无法提交
     http.csrf().disable();
 
-    http.authorizeRequests().antMatchers("/article/**").permitAll();
+    http.authorizeRequests().antMatchers("/article/**", "/login").permitAll()
+        .anyRequest().authenticated();
 
 //    http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
 //        // 如果直接访问登录页面，则登录成功后重定向到这个页面，否则跳转到之前想要访问的页面
 //        .defaultSuccessUrl("/index.html");
 
-    http.addFilterBefore(jwtAuthticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(jwtAuthticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
   }
 

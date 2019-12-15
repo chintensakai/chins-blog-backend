@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Primary
 @Service
@@ -29,6 +30,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
   private SysRoleMapper sysRoleMapper;
 
   @Override
+  @Transactional
   public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
     SysUser sysUser = sysUserMapper.selectUserByName(s);
