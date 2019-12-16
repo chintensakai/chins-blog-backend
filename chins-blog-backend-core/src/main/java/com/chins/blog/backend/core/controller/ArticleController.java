@@ -1,5 +1,7 @@
 package com.chins.blog.backend.core.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.chins.blog.backend.commons.base.PageMeta;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.base.ResponseBase;
 import com.chins.blog.backend.commons.entity.Article;
@@ -97,5 +99,13 @@ public class ArticleController {
       resultList.add(map);
     }
     return ResponseBase.success(resultList);
+  }
+
+  @PostMapping("/page")
+  public ResponseBase getArticlePage(@RequestBody PageMeta pageMeta) {
+
+    IPage<Article> allArticlePage = articleService.getAllArticlePage(pageMeta);
+
+    return ResponseBase.success(allArticlePage);
   }
 }

@@ -1,7 +1,11 @@
 package com.chins.blog.backend.provider.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chins.blog.backend.cache.utils.RedisUtils;
+import com.chins.blog.backend.commons.base.PageMeta;
 import com.chins.blog.backend.commons.base.RequestBase;
 import com.chins.blog.backend.commons.entity.ACRelation;
 import com.chins.blog.backend.commons.entity.Article;
@@ -46,6 +50,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
   @Override
   public List<Article> getAllArticle() {
     return articleMapper.selectList(null);
+  }
+
+  @Override
+  public IPage<Article> getAllArticlePage(PageMeta pageMeta) {
+    Page<Article> articlePage = new Page(pageMeta.getCurrent(), pageMeta.getSize());
+
+    QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+    queryWrapper.orderByDesc("date");
+    IPage<Article> articleIPage = articleMapper.selectPage(articlePage, queryWrapper);
+    return articleIPage;
   }
 
   @Autowired
