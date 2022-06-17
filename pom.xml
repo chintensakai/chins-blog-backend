@@ -48,7 +48,7 @@
     <dependency>
       <artifactId>fastjson</artifactId>
       <groupId>com.alibaba</groupId>
-      <version>1.2.62</version>
+      <version>1.2.83</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
